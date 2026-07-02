@@ -40,8 +40,43 @@ day_08_rag_pipeline_v2/
 │   └── demo.ipynb         ← Notebook demo cho buổi trình bày
 ├── group_project/
 │   └── README.md          ← Hướng dẫn bài tập nhóm
+├── pyproject.toml          ← Cấu hình uv cho core dependencies
 ├── requirements.txt
 └── .env.example
+```
+
+---
+
+## Cài Đặt Nhanh Với uv
+
+Repo này ưu tiên dùng `uv` để tạo môi trường và cài dependency nhanh hơn.
+
+```bash
+# Tạo/cập nhật môi trường core nhẹ
+uv sync
+
+# Chạy script qua môi trường uv
+uv run python -m src.task1_collect_legal_docs
+```
+
+Cài thêm dependency theo đúng task đang làm để tránh tải toàn bộ gói nặng:
+
+```bash
+uv pip install crawl4ai                                      # Task 2
+uv pip install markitdown                                    # Task 3
+uv pip install langchain-text-splitters sentence-transformers weaviate-client
+uv pip install rank-bm25                                     # Task 6
+uv pip install pageindex                                     # Task 8
+uv pip install openai                                        # Task 10
+uv pip install streamlit                                     # UI
+uv pip install deepeval                                      # Evaluation
+uv pip install pytest                                        # Tests
+```
+
+Nếu cần cài tất cả một lần:
+
+```bash
+uv pip install -r requirements.txt
 ```
 
 ---
@@ -538,12 +573,13 @@ run_dashboard()
 
 ```bash
 # Cài đặt dependencies
-pip install -r requirements.txt
+uv sync
+uv pip install streamlit openai
 
 # Chạy app
-streamlit run app.py
+uv run streamlit run app.py
 # hoặc
-chainlit run app.py
+uv run chainlit run app.py
 ```
 
 ---
@@ -557,7 +593,11 @@ Hãy giữ lại repo này nếu như bạn học track 3 giai đoạn 2, chúng
 ## Cài Đặt Môi Trường
 
 ```bash
-pip install -r requirements.txt
+uv sync
+
+# Cài thêm theo task, ví dụ:
+uv pip install markitdown
+uv pip install langchain-text-splitters sentence-transformers weaviate-client
 ```
 
 Tạo file `.env` từ `.env.example`:
@@ -626,11 +666,12 @@ Demo hoặc đặt câu hỏi mà nhóm đang demo khiến LLM không trả lờ
 
 ```bash
 # Chạy toàn bộ test suite
-pytest tests/ -v
+uv pip install pytest
+uv run pytest tests/ -v
 
 # Chạy từng task
-pytest tests/test_individual.py::TestTask1 -v
-pytest tests/test_individual.py::TestTask5 -v
+uv run pytest tests/test_individual.py::TestTask1 -v
+uv run pytest tests/test_individual.py::TestTask5 -v
 ```
 
 ---

@@ -191,12 +191,13 @@ run_dashboard()
 
 ```bash
 # Cài đặt dependencies
-pip install -r requirements.txt
+uv sync
+uv pip install streamlit openai
 
 # Chạy app
-streamlit run app.py
+uv run streamlit run app.py
 # hoặc
-chainlit run app.py
+uv run chainlit run app.py
 ```
 
 ---
